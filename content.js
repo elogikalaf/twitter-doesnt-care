@@ -17,8 +17,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         const likes = document.querySelectorAll('[data-testid="like"]');
         for (let i = 0; i < analytics.length; i++) {
             const result = convertToNumber(analytics[i].textContent) - convertToNumber(likes[i].textContent);
-            console.log(result);
-            analytics[i].textContent = convertToShortFormat(result);
+            console.log(result, analytics[i].textContent, likes[i].textContent);
+            if (analytics[i].textContent != '') {
+              analytics[i].textContent = convertToShortFormat(result);
+            };
         }
     }
   });
@@ -38,11 +40,16 @@ function convertToNumber(value) {
     } else if (suffix === 'B') {
       multiplier = 1000000000;
     }
+    else {
+      return value.replace(/\./g, '')
+    }
   
     return numberPart * multiplier;
-}
+  }
   
-function convertToShortFormat(number) {
+  
+function convertToShortFormat(number) { 
+    // number = number.replace(/,/g, '.');
     let suffix = '';
     let convertedNumber = number;
     if (number == 0) {
