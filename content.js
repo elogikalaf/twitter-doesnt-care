@@ -1,27 +1,22 @@
-// chrome.runtime.onMessage.addListener((obj, sender, response) => {
-//     console.log("xd")
-// //     const analytics = document.querySelectorAll('a[href*="analytics"]');
-// //     console.log(analytics[0])
-// //     const badge = document.createElement("p");
-// // //     badge.textContent = "0";
-// // //     console.log(badge);
-// // // //    analytics.appendChild(badge)
-
-// });
-console.log("xd")
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.message === 'Extension icon clicked') {
+        console.log("xd")
         const analytics = document.querySelectorAll('a[href*="analytics"]');
         const replies = document.querySelectorAll('[data-testid="reply"]');
         const retweets = document.querySelectorAll('[data-testid="retweet"]');
         const likes = document.querySelectorAll('[data-testid="like"]');
         for (let i = 0; i < analytics.length; i++) {
-            const result = convertToNumber(analytics[i].textContent) - convertToNumber(likes[i].textContent);
-            console.log(result, analytics[i].textContent, likes[i].textContent);
-            if (analytics[i].textContent != '') {
-              analytics[i].textContent = convertToShortFormat(result);
+          const result = convertToNumber(analytics[i].textContent) - convertToNumber(likes[i].textContent);
+          console.log(result, analytics[i].textContent, likes[i].textContent);
+          if (analytics[i].textContent != '') {
+            const badge = document.createElement("p");
+            badge.style.backgroundColor = "red";
+            badge.textContent = convertToShortFormat(result)
+            analytics[i].insertAdjacentElement("afterend", badge)
+            analytics[i].remove() 
+              // analytics[i].textContent = convertToShortFormat(result);
             };
-        }
+          }
     }
   });
 function convertToNumber(value) {
@@ -49,7 +44,6 @@ function convertToNumber(value) {
   
   
 function convertToShortFormat(number) { 
-    // number = number.replace(/,/g, '.');
     let suffix = '';
     let convertedNumber = number;
     if (number == 0) {

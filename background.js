@@ -5,6 +5,8 @@
 //   });
 
 
+
+
 chrome.action.onClicked.addListener(function(tab) {
     // Send a message to the content script
     chrome.tabs.sendMessage(tab.id, { message: 'Extension icon clicked' });
@@ -13,9 +15,8 @@ chrome.action.onClicked.addListener(function(tab) {
 
 
 
-
-// chrome.tabs.onUpdated.addListener((tabId, tab) => {
-//         chrome.tabs.sendMessage(tabId, {
-//             type: "NEW"
-//         });
+// chrome.tabs.onUpdated.addListener((tabId, ChangeInfo, tab) => {
+//     if (ChangeInfo.status == "complete" || 2 == 2) {
+//         chrome.tabs.sendMessage(tab.id, { message: 'Extension icon clicked' });
+//     }
 // });
